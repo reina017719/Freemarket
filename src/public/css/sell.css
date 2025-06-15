@@ -1,0 +1,175 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+.sell-form__content {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+.sell-form__heading h2 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 40px;
+    font-weight: bold;
+}
+
+.form__group {
+    margin-bottom: 50px;
+}
+
+.form__label {
+    font-weight: bold;
+    display: block;
+    /* background: blue; */
+}
+
+.form__label-image {
+    font-weight: bold;
+    /* background: gold; */
+}
+
+.sell-image {
+    border: 1px solid lightgray;
+    border-radius: 8px;
+    height: 100px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: red; */
+}
+
+.image-button {
+    padding: 3px 10px;
+    border: 2px solid #f08080;
+    border-radius: 5px;
+    font-size: 10px;
+    font-weight: bold;
+    color: #f08080;
+    cursor: pointer;
+}
+
+.label__inner {
+    border-bottom: 2px solid lightgray;
+    padding-bottom: 3px;
+}
+
+.form__label-category {
+    font-weight: bold;
+    font-size: large;
+    color: gray;
+}
+
+.category {
+    padding-top: 7px;
+    font-family: sans-serif;
+    padding-bottom: 8px;
+}
+
+.category-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px 10px;
+}
+
+.category-item {
+    text-align: center;
+    border: 2px solid #FF4F50;
+    color: #f08080;
+    padding: 3px 12px;
+    border-radius: 15px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 10px;
+    font-weight: bold;
+    transition: all 0.2s ease-in-out;
+}
+
+/* ラジオボタンは非表示 */
+.category-item input[type="radio"] {
+    display: none;
+}
+
+/* チェックされたラベルのスタイル */
+.category-item input[type="radio"]:checked + label,
+.category-item:has(input[type="radio"]:checked) {
+    background-color: #FF4F50;
+    color: white;
+}
+
+.select__condition {
+    width: 100%;
+    padding: 8px 3px;
+    border: 1px solid #777777;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.item__text {
+    width: 100%;
+    height: 36px;
+    font-size: 14px;
+    border: 1px solid #777777;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+textarea {
+    width: 100%;
+    padding-bottom: 100px;
+    border: 1px solid #777777;
+    border-radius: 3px;
+    resize: none;
+}
+
+label {
+    padding-top: 20px;
+}
+
+.price-input-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%; /* 必要なら調整 */
+}
+
+.yen-symbol {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: #666;
+    font-size: 14px;
+    font-weight: bold;
+    pointer-events: none;
+}
+
+.item__text-price {
+    padding-left: 24px; /* ¥マークと被らないよう余白追加 */
+    height: 36px;
+    font-size: 14px;
+    border: 1px solid #777777;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form__button {
+    padding-top: 10px;
+    text-align: center;
+}
+
+.form__button-submit {
+    width: 100%;
+    border: 2px solid #FF4F50;
+    background-color: #FF4F50;
+    color: #FFF;
+    padding: 5px 12px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}

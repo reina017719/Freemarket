@@ -1,0 +1,97 @@
+/* ベース設定 */
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+/* フォーム全体の中央寄せ・最大幅 */
+.register-form__content {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+/* タイトル */
+.register-form__heading h2 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 40px;
+    font-weight: bold;
+}
+
+/* フォームグループ */
+.form__group {
+    margin-bottom: 20px;
+}
+
+.form__group-title {
+    margin-bottom: 8px;
+}
+
+.form__label {
+    font-weight: bold;
+    display: block;
+}
+
+/* 入力欄 */
+.form__input input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+/* エラーメッセージ（未使用） */
+.form__error {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.form__button {
+    padding-top: 35px;
+}
+
+/* 登録ボタン */
+.form__button-submit {
+    width: 100%;
+    padding: 12px;
+    background-color: #ee6352;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form__button-submit:hover {
+    background-color: #d45748;
+}
+
+/* ======== レスポンシブ対応 ======== */
+
+/* タブレット対応（768px〜850px） */
+@media screen and (max-width: 850px) and (min-width: 768px) {
+    .register-form__content {
+        padding: 40px 16px;
+    }
+
+    .form__input input {
+        font-size: 15px;
+    }
+
+    .form__button-submit {
+        font-size: 15px;
+    }
+}
+
+/* PC幅が狭い画面（1400px〜1540px）でも崩れないよう微調整 */
+@media screen and (max-width: 1540px) and (min-width: 1400px) {
+    .register-form__content {
+        max-width: 520px;
+    }
+}
