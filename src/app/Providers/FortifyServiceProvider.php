@@ -45,7 +45,7 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::authenticateUsing(function (Request $request) {
             Validator::make($request->all(), [
                 'email' => ['required', 'email'],
-                'password' => ['required', 'min8'],
+                'password' => ['required', 'min:8'],
             ])->validate();
 
             $user = \App\Models\User::where('email', $request->email)->first();
