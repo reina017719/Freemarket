@@ -14,7 +14,7 @@ class Payment extends Model
         'payment_id',
     ];
 
-    public function item()
+    public function items()
     {
         return $this->belongsToMany(Item::class);
     }

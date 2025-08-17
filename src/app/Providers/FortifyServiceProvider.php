@@ -10,7 +10,8 @@ use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Fortify\Fortify;
 
 class FortifyServiceProvider extends ServiceProvider
@@ -39,6 +40,19 @@ class FortifyServiceProvider extends ServiceProvider
 
         Fortify::loginView(function () {
             return view('login');
+        });
+
+        Fortify::authenticateUsing(function (Request $request) {
+            Validator::make($request->all(), [
+                'email' => ['required', 'email'],
+                'password' => ['required', 'min8'],
+            ])->validate();
+
+            $user = \App\Models\User::where('email', $request->email)->first();
+
+            if ($user && Hash::check($request->password, $user->password)) {
+                return $user;
+            }
         });
 
         RateLimiter::for('login', function (Request $request) {

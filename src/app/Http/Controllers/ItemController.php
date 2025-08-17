@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ExhibitionRequest;
 use App\Models\Item;
 use App\Models\Category;
-use App\Models\Condition;
 use App\Models\Payment;
 use App\Models\Profile;
 use App\Models\Comment;
@@ -14,62 +13,48 @@ use Intervention\Image\Facades\Image;
 
 class ItemController extends Controller
 {
-    //トップページ（商品一覧）
     public function index(Request $request)
     {
-        $items = Item::latest()->get();
+        $items = Item::orderBy('id', 'asc')->get();
 
         return view('index', compact('items'));
     }
 
-    //出品ページ（フォーム表示）
     public function sell()
     {
         $categories = Category::all();
-        $conditions = Condition::all();
 
-        return view('sell', compact('categories', 'conditions'));
+        return view('sell', compact('categories'));
     }
 
-    //出品保存処理
     public function store(ExhibitionRequest $request)
     {
-        $item_data = $request->only(['name', 'brand', 'description', 'price']);
+        $item_data = $request->only(['condition', 'name', 'brand', 'description', 'price']);
 
-        //画像の保存＋圧縮処理
+        $item_data['profile_id'] = auth()->user()->profile->id;
+
         if ($request->hasFile('image')) {
         $image = $request->file('image');
         $filename = time() . '.' . $image->getClientOriginalExtension();
 
-        // Intervention Image で画像加工
         $img = Image::make($image->getRealPath());
 
-        // サイズを縮小（例：最大幅800pxに縮小、縦横比保持）
         $img->resize(800, null, function ($constraint) {
             $constraint->aspectRatio();
-            $constraint->upsize(); // 小さい画像は拡大しない
+            $constraint->upsize();
         });
 
-        // 75%品質で保存（jpegの場合）
         $img->save(storage_path('app/public/img/' . $filename), 75);
 
-        // 公開パスを保存
         $item_data['image'] = 'storage/img/' . $filename;
         }
 
-        //カテゴリーの保存
+        $item = Item::create($item_data);
+
         if ($request->has('category_id'))
         {
-            $item_data['category_id'] = $request->input('category_id');
+            $item->categories()->sync($request->input('category_id'));
         }
-
-        //状態の保存
-        if ($request->has('condition_id'))
-        {
-            $item_data['condition_id'] = $request->input('condition_id');
-        }
-
-        Item::create($item_data);
 
         return redirect('/');
     }
@@ -77,7 +62,7 @@ class ItemController extends Controller
     //商品詳細
     public function item($item_id)
     {
-        $item = Item::with(['category', 'condition', 'comments.profile'])->findOrFail($item_id);
+        $item = Item::with(['categories', 'comments.profile'])->findOrFail($item_id);
 
         return view('item', compact('item'));
     }

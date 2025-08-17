@@ -37,10 +37,14 @@
         </div>
         <h3 class="item__info-title">商品の情報</h3>
         <label class="item__info-label">カテゴリー</label>
-        <span class="item__info-category">{{ $item->category->category }}</span>
+        <span class="item__info-category">
+            @foreach($item->categories as $category)
+                <span class="category-tag">{{ $category->category }}</span>
+            @endforeach
+        </span>
         <div class="item__condition">
             <label class="item__info-label">商品状態</label>
-            <span class="item__info-condition">{{ $item->condition->condition }}</span>
+            <span class="item__info-condition">{{ $item->condition }}</span>
         </div>
         <h3 class="comment__header">コメント({{ optional($item->comments)->count() }})</h3>
         @if(!empty($item->comments) && $item->comments instanceof \Illuminate\Support\Collection)

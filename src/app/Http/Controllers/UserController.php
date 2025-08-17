@@ -33,19 +33,16 @@ class UserController extends Controller
 
     public function create_profile(Request $request)
     {
-         // AddressRequest のバリデーションを実行
         $addressRequest = new AddressRequest();
         $addressRequest->setContainer(app())->setRedirector(app('redirect'));
         $addressRequest->merge($request->all());
         $addressRequest->validateResolved();
 
-        // ProfileRequest のバリデーションを実行
         $profileRequest = new ProfileRequest();
         $profileRequest->setContainer(app())->setRedirector(app('redirect'));
         $addressRequest->merge($request->all());
         $profileRequest->validateResolved();
 
-        //ユーザー情報のupdate(usersテーブル)
         /** @var \App\Models\User $user */
         $user = Auth::user();
         $user->name = $request->input('name');
@@ -54,13 +51,11 @@ class UserController extends Controller
         $profile_data = $request->only(['name', 'postal_code', 'address', 'building']);
         $profile_data['user_id'] = $user->id;
 
-        // 画像ファイルの処理
         if ($request->hasFile('image')) {
         $path = $request->file('image')->store('profile_images', 'public');
-        $profile_data['image'] = $path; // DBに保存する用のパス
+        $profile_data['image'] = $path;
         }
 
-        //プロフィールの保存(新規 or 更新)
         $user->profile()->updateOrCreate(
             ['user_id' => $user->id],
             $profile_data

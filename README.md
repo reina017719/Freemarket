@@ -13,21 +13,24 @@ Laravelを使ったフリマアプリケーションです。
 ## 使用技術
 
 - PHP 8.4.2
-- laravel 8.83.29
+- Laravel Freamework 8.83.29
 - nginx 1.21.1
-- MySQL（MariaDB 10.3 使用）
-- Docker / Docker Compose
+- MySQL 8.0.26
+- Docker
+- Fortify
+
 
 ## セットアップ手順
 
-Dockerビルド
+### Dockerビルド
 
 1. git clone git@github.com:reina017719/Freemarket.git
 2. docker compose up -d --build
 
 *MySQLは、OSによって起動しない場合があるのでそれぞれのPCに合わせて docker-compose.yml ファイルを編集してください。
 
-Laravel環境構築
+### Laravel環境構築
+
 1. docker-compose exec php bash
 2. composer install
 3. .env.exampleファイルから.envを作成し、環境変数を変更
@@ -35,12 +38,17 @@ Laravel環境構築
 5. php artisan migrate
 6. php artisan db:seed
 
+*出品ダミーデータはユーザーアドレス `test1@coachtech.com` で全て作成されます。
+
 ## アップロード画像について
 
-- ユーザーがアップロードした画像は 'storage/app/  public' に保存されます。
-- ローカル環境では以下のコマンドでシンボリックリンクを作成してください：
+- ユーザーがアップロードした画像は 'storage/app/public' に保存されます。
+- ローカル環境では以下のコマンドでシンボリックリンクを作成してください： `php artisan storage:link`
 
-php artisan storage:link
+## ログイン情報　（テスト用）
+
+- メールアドレス： `test1@coachtech.com` / `test2@coachtech.com`
+- パスワード：全ユーザー共通で `password123` です。
 
 ## URL
 

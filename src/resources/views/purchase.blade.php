@@ -17,25 +17,23 @@
                     <p class="price">&yen;{{ number_format($item->price) }}</p>
                 </div>
             </div>
-        <hr>
-        <div class="section">
-        <h4>支払い方法</h4>
-        <form action="" method="">
-            @csrf
-            <select name="payment_method" id="payment-select">
-                @foreach($payments as $payment)
-                    <option value="{{ $payment->id }}">{{ $payment->payment_type}}</option>
-                @endforeach
-            </select>
             <hr>
             <div class="section">
-                <h4>配送先</h4>
-                <p>{{ $address->postal_code }}</p>
-                <p>{{ $address->address }} {{ $address->building}}</p>
-                <a href="/purchase/address/{{ $item->id }}" class="edit-link">変更する</a>
+                <h4>支払い方法</h4>
+                <select name="payment_method" id="payment-select">
+                    @foreach($payments as $payment)
+                        <option value="{{ $payment->id }}">{{ $payment->payment_type}}</option>
+                    @endforeach
+                </select>
+                <hr>
+                <div class="section">
+                    <h4>配送先</h4>
+                    <p>{{ $address->postal_code }}</p>
+                    <p>{{ $address->address }} {{ $address->building}}</p>
+                    <a href="/purchase/address/{{ $item->id }}" class="edit-link">変更する</a>
+                </div>
             </div>
         </div>
-    </div>
         <div class="right-column">
             <div class="summary-box">
                 <table>
@@ -49,8 +47,9 @@
                     </tr>
                 </table>
             </div>
-            <button type="submit" class="purchase-button">購入する</button>
-            </form>
+            <a href="/">
+                <button type="submit" class="purchase-button">購入する</button>
+            </a>
         </div>
     </div>
 </div>

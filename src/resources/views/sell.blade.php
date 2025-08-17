@@ -15,9 +15,10 @@
             <label class="form__label-image">商品画像</label>
             <div class="sell-image">
                 <label class="image-button">画像を選択する
-                <input type="file" name="image" accept="image/*" style="display: none;" onchange="document.getElementById('fileName').textContent = this.files[0]?.name || '選択されていません';" value="{{ old('image') }}">
+                    <input type="file" name="image" accept="image/*" style="display: none;" onchange="previewImage(this)">
                 </label>
                 <span id="fileName" style="margin-left: 10px;">選択されていません</span>
+                <img id="preview">
             </div>
             @error('image')
                 <p class="form__error" style="color:red;">{{ $message }}</p>
@@ -32,20 +33,21 @@
                 <div class="category-list">
                     @foreach($categories as $category)
                     <label class="category-item">
-                        <input type="radio" name="category_id" value="{{ $category->id }}" />{{ $category->category }}
+                        <input type="checkbox" name="category_id[]" value="{{ $category->id }}" />{{ $category->category }}
                     </label>
                     @endforeach
                 </div>
-                @error('category')
+                @error('category_id')
                     <p class="form__error" style="color:red;">{{ $message }}</p>
                 @enderror
             </div>
             <label class="form__label">商品の状態</label>
-            <select class="select__condition" name="condition_id">
+            <select class="select__condition" name="condition">
                 <option value="" disabled selected>選択してください</option>
-                @foreach($conditions as $condition)
-                    <option value="{{ $condition->id }}">{{ $condition->condition}}</option>
-                @endforeach
+                <option value="良好">良好</option>
+                <option value="目立った傷や汚れなし">目立った傷や汚れなし</option>
+                <option value="やや傷や汚れあり">やや傷や汚れあり</option>
+                <option value="状態が悪い">状態が悪い</option>
             </select>
             @error('condition')
                 <p class="form__error" style="color:red;">{{ $message }}</p>
@@ -81,4 +83,26 @@
         </div>
     </form>
 </div>
+
+<script>
+    function previewImage(input) {
+        const file = input.files[0];
+        const fileNameElement = document.getElementById('fileName');
+        const previewElement = document.getElementById('preview');
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewElement.src = e.target.result;
+                previewElement.style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+            fileName.textContent = file.name;
+        } else {
+            preview.src = '';
+            preview.style.display = 'none';
+            fileName.textContent = '選択されていません';
+        }
+    }
+</script>
 @endsection

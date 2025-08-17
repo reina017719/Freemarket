@@ -25,23 +25,29 @@ body {
 .form__label {
     font-weight: bold;
     display: block;
-    /* background: blue; */
 }
 
 .form__label-image {
     font-weight: bold;
-    /* background: gold; */
 }
 
 .sell-image {
     border: 1px solid lightgray;
     border-radius: 8px;
-    height: 100px;
+    height: 200px;
     position: relative;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* background-color: red; */
+    overflow: hidden;
+}
+
+.sell-image img {
+    max-width: 150px;
+    max-height: 150px;
+    object-fit: contain;
+    display: none;
 }
 
 .image-button {
@@ -90,14 +96,15 @@ body {
     transition: all 0.2s ease-in-out;
 }
 
-/* ラジオボタンは非表示 */
-.category-item input[type="radio"] {
-    display: none;
+.category-item input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    margin: 0;
 }
 
-/* チェックされたラベルのスタイル */
-.category-item input[type="radio"]:checked + label,
-.category-item:has(input[type="radio"]:checked) {
+.category-item input[type="checkbox"]:checked + label,
+.category-item:has(input[type="checkbox"]:checked) {
     background-color: #FF4F50;
     color: white;
 }
@@ -134,7 +141,7 @@ label {
 .price-input-wrapper {
     position: relative;
     display: inline-block;
-    width: 100%; /* 必要なら調整 */
+    width: 100%;
 }
 
 .yen-symbol {
@@ -149,7 +156,7 @@ label {
 }
 
 .item__text-price {
-    padding-left: 24px; /* ¥マークと被らないよう余白追加 */
+    padding-left: 24px;
     height: 36px;
     font-size: 14px;
     border: 1px solid #777777;

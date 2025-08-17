@@ -10,8 +10,8 @@ class Item extends Model
     use HasFactory;
 
     protected $fillable = [
-        'category_id',
-        'condition_id',
+        'profile_id',
+        'condition',
         'image',
         'name',
         'brand',
@@ -19,19 +19,14 @@ class Item extends Model
         'price'
     ];
 
-    public function category()
+    public function categories()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsToMany(Category::class, 'category_item', 'item_id', 'category_id');
     }
 
-    public function condition()
+    public function payments()
     {
-        return $this->belongsTo(Condition::class);
-    }
-
-    public function payment()
-    {
-        return $this->belongsToMan(Payment::class);
+        return $this->belongsToMany(Payment::class);
     }
 
     public function comments()

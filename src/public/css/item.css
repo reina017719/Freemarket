@@ -76,10 +76,15 @@ h2 {
 }
 
 .item__info-category {
-    padding: 3px 15px;
-    border-radius: 10px;
-    background: lightgray;
     font-size: small;
+}
+
+.category-tag {
+    display: inline-block;
+    padding: 3px 10px;
+    margin: 3px;
+    border-radius: 15px;
+    background: lightgray;
 }
 
 .item__info-condition {
