@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ExhibitionRequest;
 use App\Models\Item;
 use App\Models\Category;
 use App\Models\Payment;
 use App\Models\Profile;
 use App\Models\Comment;
+use App\Models\Favorite;
 use Intervention\Image\Facades\Image;
 
 class ItemController extends Controller
@@ -17,7 +19,14 @@ class ItemController extends Controller
     {
         $items = Item::orderBy('id', 'asc')->get();
 
-        return view('index', compact('items'));
+        $user = Auth::user();
+        $favorites =collect();
+        if ($user && $user->profile) {
+            $favoriteItemIds = Favorite::where('profile_id', $user->profile->id)->pluck('item_id');
+            $favorites = Item::whereIn('id', $favoriteItemIds)->get();
+        }
+
+        return view('index', compact('items', 'favorites'));
     }
 
     public function sell()
@@ -59,7 +68,6 @@ class ItemController extends Controller
         return redirect('/');
     }
 
-    //商品詳細
     public function item($item_id)
     {
         $item = Item::with(['categories', 'comments.profile'])->findOrFail($item_id);
@@ -67,7 +75,6 @@ class ItemController extends Controller
         return view('item', compact('item'));
     }
 
-    //購入ページ
     public function purchase($item_id)
     {
         session(['purchase_item_id' => $item_id]);
